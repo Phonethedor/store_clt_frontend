@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import HomeView from '../views/homeView.vue';
 
 const routes = [
     {
@@ -7,11 +7,13 @@ const routes = [
         name: 'home',
         component: HomeView
     },
+    /*
     {
         path: '/login',
         name: 'login',
         component: () => import('../views/LoginView.vue') // Carga perezosa
     }
+    */
 ];
 
 const router = createRouter({
