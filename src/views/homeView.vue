@@ -26,6 +26,19 @@
             <div class="section-header">
                 <h2>Nuestros Productos</h2>
                 <div class="header-line"></div>
+                
+                <div class="local-search">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="M21 21L16.65 16.65"></path>
+                    </svg>
+                    <input 
+                        type="text" 
+                        v-model="searchStore.searchQuery" 
+                        placeholder="Filtrar colección..."
+                        class="local-search-input"
+                    >
+                </div>
             </div>
 
             <div v-if="loading" class="loader-container">
@@ -270,6 +283,39 @@ const formatPrice = (value) => {
     height: 1px;
     background-color: var(--charcoal);
     margin: 0 auto;
+}
+
+.local-search {
+    margin: 40px auto 0;
+    max-width: 280px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 0;
+    transition: var(--transition-smooth);
+}
+
+.local-search:focus-within {
+    border-color: var(--charcoal);
+    color: var(--charcoal);
+}
+
+.local-search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 0.9rem;
+    color: var(--charcoal);
+    outline: none;
+    font-family: var(--font-sans);
+    letter-spacing: 0.5px;
+}
+
+.local-search-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
 }
 
 /* Loader */
