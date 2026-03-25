@@ -6,18 +6,20 @@
         <a href="#" class="nav-link">Colecciones</a>
         <a href="#" class="nav-link">Nosotros</a>
       </div>
-      
+
       <div class="logo">
         <router-link to="/" class="logo-text">My peace</router-link>
       </div>
-      
+
       <div class="nav-actions">
         <!-- Theme Toggle -->
-        <button class="icon-btn theme-toggle" @click="toggleTheme" 
-                :title="isDark ? 'Modo Claro' : 'Modo Oscuro'">
-          <svg v-if="isDark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <button class="icon-btn theme-toggle" @click="toggleTheme" :title="isDark ? 'Modo Claro' : 'Modo Oscuro'">
+          <svg v-if="isDark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.5">
             <circle cx="12" cy="12" r="5"></circle>
-            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+            <path
+              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42">
+            </path>
           </svg>
           <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -25,20 +27,24 @@
         </button>
 
         <div class="search-container" :class="{ 'active': isSearchActive }">
-          <input 
-            v-if="isSearchActive"
-            type="text" 
-            v-model="searchStore.searchQuery" 
-            placeholder="Buscar productos..."
-            class="search-input"
-            @keydown.esc="isSearchActive = false"
-            ref="searchInput"
-          >
+          <input v-if="isSearchActive" type="text" v-model="searchStore.searchQuery" placeholder="Buscar productos..."
+            class="search-input" @keydown.esc="isSearchActive = false" ref="searchInput">
           <button class="icon-btn" aria-label="Buscar" @click="toggleSearch">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <circle cx="11" cy="11" r="8"></circle>
               <path d="M21 21L16.65 16.65"></path>
             </svg>
+          </button>
+        </div>
+        <router-link v-if="!authStore.isAuthenticated" to="/login" class="icon-btn" title="Iniciar Sesión">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </router-link>
+        <div v-else class="user-menu">
+          <span class="user-name">{{ authStore.userName }}</span>
+          <button @click="authStore.logout" class="icon-btn" title="Cerrar Sesión">
           </button>
         </div>
         <button class="icon-btn" aria-label="Carrito" @click="cartStore.toggleCart">
@@ -58,10 +64,12 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useCartStore } from '../stores/cart';
 import { useSearchStore } from '../stores/search';
+import { useAuthStore } from '../stores/auth';
 import { nextTick } from 'vue';
 
 const cartStore = useCartStore();
 const searchStore = useSearchStore();
+const authStore = useAuthStore();
 
 const isScrolled = ref(false);
 const isDark = ref(false);
@@ -90,11 +98,11 @@ const toggleTheme = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
-  
+
   // Check preference
   const savedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
+
   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
     isDark.value = true;
     document.documentElement.setAttribute('data-theme', 'dark');
@@ -185,8 +193,15 @@ onUnmounted(() => {
 }
 
 @keyframes slideIn {
-  from { width: 0; opacity: 0; }
-  to { width: 150px; opacity: 1; }
+  from {
+    width: 0;
+    opacity: 0;
+  }
+
+  to {
+    width: 150px;
+    opacity: 1;
+  }
 }
 
 .logo {

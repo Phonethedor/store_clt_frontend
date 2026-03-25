@@ -1,24 +1,36 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/homeView.vue';
+import { useAuthStore } from '../stores/auth';
 
 const routes = [
-    {
-        path: '/',
-        name: 'home',
-        component: HomeView
-    },
-    /*
+    { path: '/', name: 'home', component: HomeView },
     {
         path: '/login',
         name: 'login',
-        component: () => import('../views/LoginView.vue') // Carga perezosa
+        component: () => import('../views/LoginView.vue'),
+        meta: { guest: true }
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: () => import('../views/RegisterView.vue'),
+        meta: { guest: true }
     }
-    */
 ];
 
 const router = createRouter({
     history: createWebHistory(),
     routes
+});
+
+// Guard para evitar que los usuarios logueados visiten Login/Register
+router.beforeEach((to, from, next) => {
+    const auth = useAuthStore();
+    if (to.meta.guest && auth.isAuthenticated) {
+        next('/');
+    } else {
+        next();
+    }
 });
 
 export default router;
