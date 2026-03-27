@@ -15,6 +15,12 @@ const routes = [
         name: 'register',
         component: () => import('../views/RegisterView.vue'),
         meta: { guest: true }
+    },
+    {
+        path: '/categoria/:id',
+        name: 'category',
+        component: () => import('../views/CategoryView.vue'),
+        props: true
     }
 ];
 

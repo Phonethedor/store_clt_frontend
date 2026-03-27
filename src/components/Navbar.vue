@@ -3,7 +3,14 @@
     <div class="nav-container">
       <div class="nav-links">
         <router-link to="/" class="nav-link">Shop</router-link>
-        <a href="#" class="nav-link">Colecciones</a>
+        <div class="dropdown">
+          <span class="nav-link dropdown-trigger">Categorías</span>
+          <div class="dropdown-menu">
+            <router-link v-for="cat in categories" :key="cat.id" :to="`/categoria/${cat.id}`" class="dropdown-item">
+              {{ cat.name }}
+            </router-link>
+          </div>
+        </div>
         <a href="#" class="nav-link">Nosotros</a>
       </div>
 
@@ -61,11 +68,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 import { useCartStore } from '../stores/cart';
 import { useSearchStore } from '../stores/search';
 import { useAuthStore } from '../stores/auth';
-import { nextTick } from 'vue';
+import tiendaApi from '../api/tiendaApi';
 
 const cartStore = useCartStore();
 const searchStore = useSearchStore();
@@ -75,6 +82,7 @@ const isScrolled = ref(false);
 const isDark = ref(false);
 const isSearchActive = ref(false);
 const searchInput = ref(null);
+const categories = ref([]);
 
 const toggleSearch = async () => {
   isSearchActive.value = !isSearchActive.value;
@@ -96,7 +104,7 @@ const toggleTheme = () => {
   localStorage.setItem('theme', isDark.value ? 'dark' : 'light');
 };
 
-onMounted(() => {
+onMounted(async () => {
   window.addEventListener('scroll', handleScroll);
 
   // Check preference
@@ -106,6 +114,14 @@ onMounted(() => {
   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
     isDark.value = true;
     document.documentElement.setAttribute('data-theme', 'dark');
+  }
+
+  // Fetch categories
+  try {
+    const { data } = await tiendaApi.get('/categories');
+    categories.value = data.data;
+  } catch (error) {
+    console.error("Error al obtener categorías:", error);
   }
 });
 
@@ -171,6 +187,58 @@ onUnmounted(() => {
 
 .nav-link:hover::after {
   width: 100%;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-trigger {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--sand);
+  min-width: 180px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  padding: 12px 0;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 100;
+  border: 1px solid var(--border-color);
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  color: var(--charcoal);
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--taupe);
+}
+
+[data-theme='dark'] .dropdown-menu {
+  background: #1a1a1a;
 }
 
 .search-container {
