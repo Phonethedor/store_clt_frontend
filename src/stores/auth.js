@@ -57,6 +57,22 @@ export const useAuthStore = defineStore('auth', {
             localStorage.removeItem('user');
             // Informamos al backend para que destruya la sesion
             tiendaApi.get('/auth/logout').catch(() => { });
+        },
+
+        async updateUser(userData) {
+            this.loading = true;
+            this.error = null;
+            try {
+                const response = await tiendaApi.patch(`/users/${this.user.id}`, userData);
+                this.user = response.data.data;
+                localStorage.setItem('user', JSON.stringify(this.user));
+                return true;
+            } catch (err) {
+                this.error = err.response?.data?.message || 'Error al actualizar información';
+                throw err;
+            } finally {
+                this.loading = false;
+            }
         }
     }
 });

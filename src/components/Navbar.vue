@@ -50,8 +50,15 @@
           </svg>
         </router-link>
         <div v-else class="user-menu">
-          <span class="user-name">{{ authStore.userName }}</span>
-          <button @click="authStore.logout" class="icon-btn" title="Cerrar Sesión">
+          <router-link to="/account" class="user-link">
+            <span class="user-name">{{ authStore.userName }}</span>
+          </router-link>
+          <button @click="authStore.logout" class="icon-btn logout-btn" title="Cerrar Sesión">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
           </button>
         </div>
         <button class="icon-btn" aria-label="Carrito" @click="cartStore.toggleCart">
@@ -322,5 +329,32 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-link {
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.user-link:hover {
+  opacity: 0.7;
+}
+
+.user-name {
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  font-weight: 500;
+}
+
+.logout-btn {
+  padding: 4px;
 }
 </style>

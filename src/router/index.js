@@ -21,6 +21,12 @@ const routes = [
         name: 'category',
         component: () => import('../views/CategoryView.vue'),
         props: true
+    },
+    {
+        path: '/account',
+        name: 'account',
+        component: () => import('../views/AccountView.vue'),
+        meta: { requiresAuth: true }
     }
 ];
 
@@ -34,6 +40,8 @@ router.beforeEach((to, from, next) => {
     const auth = useAuthStore();
     if (to.meta.guest && auth.isAuthenticated) {
         next('/');
+    } else if (to.meta.requiresAuth && !auth.isAuthenticated) {
+        next('/login');
     } else {
         next();
     }
