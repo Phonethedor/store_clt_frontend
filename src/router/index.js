@@ -11,7 +11,7 @@ const routes = [
         meta: { guest: true }
     },
     {
-        path: '/register',
+        path: '/registro',
         name: 'register',
         component: () => import('../views/RegisterView.vue'),
         meta: { guest: true }
@@ -23,10 +23,15 @@ const routes = [
         props: true
     },
     {
-        path: '/account',
+        path: '/cuenta',
         name: 'account',
         component: () => import('../views/AccountView.vue'),
         meta: { requiresAuth: true }
+    },
+    {
+        path: '/carrito',
+        name: 'cart',
+        component: () => import('../views/CartView.vue')
     }
 ];
 

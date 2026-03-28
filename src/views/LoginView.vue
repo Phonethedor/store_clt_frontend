@@ -22,7 +22,7 @@
             </form>
 
             <p class="auth-footer">
-                ¿No tienes cuenta? <router-link to="/register">Regístrate aquí</router-link>
+                ¿No tienes cuenta? <router-link to="/registro">Regístrate aquí</router-link>
             </p>
         </div>
     </div>
@@ -51,7 +51,9 @@ const handleLogin = async () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
+    min-height: 100vh;
+    padding-top: 100px;
+    padding-bottom: 40px;
 }
 
 .auth-card {

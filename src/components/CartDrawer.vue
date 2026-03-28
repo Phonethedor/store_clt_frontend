@@ -48,7 +48,12 @@
                         <span>${{ formatPrice(cartStore.totalPrice) }}</span>
                     </div>
                 </div>
-                <button class="checkout-btn">Finalizar Compra</button>
+                <div class="cart-actions">
+                    <router-link to="/carrito" class="btn-outline view-cart-btn" @click="cartStore.closeCart">
+                        Ver Carrito
+                    </router-link>
+                    <button class="checkout-btn">Finalizar Compra</button>
+                </div>
             </div>
         </div>
     </aside>
@@ -197,6 +202,20 @@ const formatPrice = (value) => {
     margin-top: 12px;
 }
 
+.cart-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.view-cart-btn {
+    text-align: center;
+    padding: 14px;
+    display: block;
+    width: 100%;
+}
+
 .checkout-btn {
     background: var(--charcoal);
     color: var(--white);
@@ -206,7 +225,6 @@ const formatPrice = (value) => {
     font-size: 0.9rem;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-top: 20px;
 }
 
 .empty-cart {

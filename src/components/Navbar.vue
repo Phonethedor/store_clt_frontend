@@ -168,6 +168,7 @@ onUnmounted(() => {
 
 .nav-links {
   display: flex;
+  align-items: center;
   gap: 32px;
   flex: 1;
 }
@@ -281,7 +282,9 @@ onUnmounted(() => {
 
 .logo {
   flex: 1;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo-text {
@@ -296,6 +299,7 @@ onUnmounted(() => {
 .nav-actions {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 20px;
   flex: 1;
 }

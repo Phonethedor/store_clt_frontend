@@ -67,8 +67,9 @@ const handleRegister = async () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 85vh;
-    padding: 20px;
+    min-height: 100vh;
+    padding-top: 100px;
+    padding-bottom: 40px;
 }
 
 .auth-card {

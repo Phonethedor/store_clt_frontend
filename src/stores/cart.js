@@ -62,6 +62,12 @@ export const useCartStore = defineStore('cart', {
 
         closeCart() {
             this.isOpen = false;
+        },
+
+        clearCart() {
+            this.items = [];
+            this.saveCart();
+            this.closeCart();
         }
     }
 });
