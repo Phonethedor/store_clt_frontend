@@ -52,7 +52,9 @@
                     <router-link to="/carrito" class="btn-outline view-cart-btn" @click="cartStore.closeCart">
                         Ver Carrito
                     </router-link>
-                    <button class="checkout-btn">Finalizar Compra</button>
+                    <router-link to="/checkout" class="checkout-btn" @click="cartStore.closeCart">
+                        Finalizar Compra
+                    </router-link>
                 </div>
             </div>
         </div>

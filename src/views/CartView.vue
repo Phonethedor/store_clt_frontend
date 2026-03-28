@@ -153,8 +153,10 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { useCartStore } from '../stores/cart';
 
+const router = useRouter();
 const cartStore = useCartStore();
 const coupon = ref('');
 const isApplying = ref(false);
@@ -183,11 +185,10 @@ const applyCoupon = () => {
 
 const handleCheckout = () => {
     isCheckingOut.value = true;
-    // Simulación de navegación a checkout
     setTimeout(() => {
         isCheckingOut.value = false;
-        alert('Enviándote a la pasarela de pago segura...');
-    }, 2000);
+        router.push('/checkout');
+    }, 1000);
 };
 </script>
 
