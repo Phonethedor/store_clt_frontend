@@ -81,8 +81,8 @@ const handleSubmit = async () => {
     isSubmitting.value = true;
 
     try {
-        // Reemplaza 'TU_ID_DE_FORMSPREE' con tu ID real de Formspree
-        const response = await fetch('https://formspree.io/f/TU_ID_DE_FORMSPREE', {
+        // Endpoint real de Formspree
+        const response = await fetch('https://formspree.io/f/mqeyzlad', {
             method: 'POST',
             body: JSON.stringify(form),
             headers: {
