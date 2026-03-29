@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import Navbar from './components/Navbar.vue';
 import CartDrawer from './components/CartDrawer.vue';
 import Footer from './components/Footer.vue';
+import ToastNotification from './components/ToastNotification.vue';
 
 const showSplash = ref(true);
 const isExtinguished = ref(false);
@@ -44,6 +45,7 @@ onMounted(() => {
       <router-view />
     </main>
     <Footer />
+    <ToastNotification />
   </div>
 </template>
 

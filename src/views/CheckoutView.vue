@@ -124,7 +124,9 @@ import { useRouter } from 'vue-router';
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
 import tiendaApi from '../api/tiendaApi';
+import { useNotificationStore } from '../stores/notification';
 
+const notificationStore = useNotificationStore();
 const router = useRouter();
 const cartStore = useCartStore();
 const authStore = useAuthStore();
@@ -179,7 +181,8 @@ const handlePlaceOrder = async () => {
         router.push('/');
     } catch (error) {
         console.error('Error al procesar el pedido:', error);
-        alert(error.response?.data?.message || 'Error al procesar el pedido. Intenta nuevamente.');
+        const msg = error.response?.data?.message || 'Error al procesar el pedido.';
+        notificationStore.add(msg, 'error');
     } finally {
         isProcessing.value = false;
     }
