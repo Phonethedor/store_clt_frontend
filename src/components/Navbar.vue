@@ -49,17 +49,16 @@
             <circle cx="12" cy="7" r="4"></circle>
           </svg>
         </router-link>
-        <div v-else class="user-menu">
-          <router-link to="/account" class="user-link">
+        <div v-else class="user-menu dropdown">
+          <span class="user-link dropdown-trigger">
             <span class="user-name">{{ authStore.userName }}</span>
-          </router-link>
-          <button @click="authStore.logout" class="icon-btn logout-btn" title="Cerrar Sesión">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-              <polyline points="16 17 21 12 16 7"></polyline>
-              <line x1="21" y1="12" x2="9" y2="12"></line>
-            </svg>
-          </button>
+          </span>
+          <div class="dropdown-menu">
+            <router-link to="/cuenta" class="dropdown-item">Mi Perfil</router-link>
+            <router-link to="/mis-pedidos" class="dropdown-item">Mis Compras</router-link>
+            <div class="dropdown-divider"></div>
+            <button @click="authStore.logout" class="dropdown-item logout-link">Cerrar Sesión</button>
+          </div>
         </div>
         <button class="icon-btn" aria-label="Carrito" @click="cartStore.toggleCart">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
