@@ -8,15 +8,15 @@
       <div class="footer-links">
         <div class="link-group">
           <h4>Tienda</h4>
-          <a href="#">Velas Aromáticas</a>
-          <a href="#">Difusores</a>
-          <a href="#">Sprays</a>
+          <router-link to="/">Inicio</router-link>
+          <router-link to="/nosotros">Nosotros</router-link>
+          <router-link to="/contacto">Contacto</router-link>
         </div>
         <div class="link-group">
           <h4>Ayuda</h4>
-          <a href="#">Envíos y Devoluciones</a>
-          <a href="#">FAQ</a>
-          <a href="#">Contacto</a>
+          <router-link to="/contacto">Soporte</router-link>
+          <router-link to="/contacto">Devoluciones</router-link>
+          <router-link to="/contacto">FAQ</router-link>
         </div>
       </div>
     </div>

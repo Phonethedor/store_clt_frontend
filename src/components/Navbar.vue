@@ -12,6 +12,7 @@
           </div>
         </div>
         <router-link to="/nosotros" class="nav-link">Nosotros</router-link>
+        <router-link to="/contacto" class="nav-link">Contacto</router-link>
       </div>
 
       <div class="logo">
