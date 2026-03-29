@@ -11,7 +11,7 @@
             </router-link>
           </div>
         </div>
-        <a href="#" class="nav-link">Nosotros</a>
+        <router-link to="/nosotros" class="nav-link">Nosotros</router-link>
       </div>
 
       <div class="logo">
