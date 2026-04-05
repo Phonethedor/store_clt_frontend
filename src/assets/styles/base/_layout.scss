@@ -1,0 +1,11 @@
+// src/assets/styles/base/_layout.scss
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &__main {
+    flex-grow: 1;
+  }
+}

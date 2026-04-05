@@ -1,0 +1,33 @@
+// src/assets/styles/base/_variables.scss
+
+:root {
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+  
+  // Colores Base (Light)
+  --sand: #f9f7f2;
+  --charcoal: #161210;
+  --taupe: #c2b59e;
+  --sage: #a8b2a1;
+  --text-main: #2c241e;
+  --text-muted: #6e645e;
+  --border-color: #e8e4db;
+  --card-bg: #ffffff;
+  --white: #ffffff;
+  
+  // Shadows & Transitions
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 12px 24px rgba(0, 0, 0, 0.1);
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+// Dark Mode Overrides
+[data-theme='dark'] {
+  --sand: #161210;
+  --charcoal: #f9f7f2;
+  --text-main: #f9f7f2;
+  --text-muted: #a8a09a;
+  --border-color: #2c241e;
+  --card-bg: #1c1816;
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.3);
+}

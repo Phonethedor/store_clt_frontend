@@ -23,6 +23,11 @@ const routes = [
         props: true
     },
     {
+        path: '/categorias',
+        name: 'categories',
+        component: () => import('../views/CategoriesView.vue')
+    },
+    {
         path: '/cuenta',
         name: 'account',
         component: () => import('../views/AccountView.vue'),
@@ -54,12 +59,24 @@ const routes = [
         path: '/contacto',
         name: 'contact',
         component: () => import('../views/ContactView.vue')
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: () => import('../views/NotFoundView.vue')
     }
 ];
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition;
+        } else {
+            return { top: 0, behavior: 'smooth' };
+        }
+    }
 });
 
 // Guard para evitar que los usuarios logueados visiten Login/Register

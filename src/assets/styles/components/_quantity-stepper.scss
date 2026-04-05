@@ -1,0 +1,60 @@
+// src/assets/styles/components/_quantity-stepper.scss
+
+.quantity-stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--sand);
+  overflow: hidden;
+  width: fit-content;
+
+  &__btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--charcoal);
+    background: transparent;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+        background: rgba(0, 0, 0, 0.05);
+        color: var(--charcoal);
+    }
+
+    &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+  }
+
+  &__display {
+    width: 40px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--charcoal);
+    user-select: none;
+  }
+
+  &--sm {
+    .quantity-stepper__btn {
+        width: 32px;
+        height: 32px;
+    }
+    .quantity-stepper__display {
+        width: 32px;
+        font-size: 0.85rem;
+    }
+  }
+}
+
+[data-theme='dark'] {
+    .quantity-stepper__btn:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}

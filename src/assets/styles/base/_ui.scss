@@ -1,0 +1,173 @@
+// src/assets/styles/base/_ui.scss
+
+/* Base Button Styles */
+.base-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  border: none;
+  overflow: hidden;
+  white-space: nowrap;
+
+  &--primary {
+    background: var(--charcoal);
+    color: var(--sand);
+    border: 1px solid var(--charcoal);
+    
+    &:hover:not(:disabled) { 
+      background: var(--taupe); 
+      color: var(--charcoal); 
+      border-color: var(--taupe); 
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    border: 1px solid var(--charcoal);
+    color: var(--charcoal);
+    
+    &:hover:not(:disabled) { 
+      background: var(--charcoal); 
+      color: var(--sand); 
+    }
+  }
+
+  &--text {
+    background: transparent;
+    border: none;
+    color: var(--charcoal);
+    padding: 0;
+    min-width: auto;
+    
+    &:hover:not(:disabled) { 
+      opacity: 0.6; 
+    }
+  }
+
+  &--sm { padding: 10px 20px; font-size: 0.75rem; }
+  &--md { padding: 14px 28px; }
+  &--lg { padding: 18px 40px; font-size: 1rem; }
+  &--full { padding: 16px; width: 100%; display: flex; }
+
+  &__loader {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid currentColor;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    animation: rotation 1s linear infinite;
+  }
+
+  &__content {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    
+    &--hidden { 
+      opacity: 0; 
+      visibility: hidden; 
+    }
+  }
+
+  &:disabled { 
+    opacity: 0.4; 
+    cursor: not-allowed; 
+  }
+}
+
+/* Base Input Styles */
+.base-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 20px;
+
+  &__label {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  &__required-mark {
+    color: #e63946;
+  }
+
+  &__wrapper {
+    position: relative;
+  }
+
+  &__field {
+    width: 100%;
+    padding: 14px 16px;
+    background-color: var(--sand);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--charcoal);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    outline: none;
+
+    &:focus {
+      border-color: var(--charcoal);
+      background-color: var(--white);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: var(--gray-100);
+    }
+  }
+
+  &--error {
+    .base-input__field {
+      border-color: #e63946;
+      background-color: rgba(230, 57, 70, 0.02);
+    }
+  }
+
+  &__error-message {
+    font-size: 0.75rem;
+    color: #e63946;
+    font-weight: 500;
+    margin-top: -4px;
+  }
+}
+
+@keyframes rotation {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Transiciones Genéricas de UI */
+.slide-fade-enter-active { transition: all 0.3s ease-out; }
+.slide-fade-leave-active { transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1); }
+.slide-fade-enter-from, .slide-fade-leave-to {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+
+[data-theme='dark'] {
+  .base-button--outline { 
+    border-color: var(--border-color); 
+    color: var(--charcoal); 
+  }
+  .base-input__field:focus {
+    background-color: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+}
