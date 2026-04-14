@@ -82,7 +82,7 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 import { useCartStore } from '../stores/cart';
 import { useSearchStore } from '../stores/search';
 import { useAuthStore } from '../stores/auth';
-import tiendaApi from '../api/tiendaApi';
+import productService from '../services/productService';
 
 const cartStore = useCartStore();
 const searchStore = useSearchStore();
@@ -126,8 +126,7 @@ onMounted(async () => {
   }
 
   try {
-    const { data } = await tiendaApi.get('/categories');
-    categories.value = data.data;
+    categories.value = await productService.getCategories();
   } catch (error) {
     console.error("Error al obtener categorías:", error);
   }

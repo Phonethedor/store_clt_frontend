@@ -84,7 +84,7 @@ import { ref, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import ProductCard from '../components/ProductCard.vue';
 import BaseButton from '../components/BaseButton.vue';
-import tiendaApi from '../api/tiendaApi';
+import productService from '../services/productService';
 
 const router = useRouter();
 const props = defineProps(['id']);
@@ -101,11 +101,8 @@ const setViewMode = (mode) => {
 const fetchData = async () => {
     loading.value = true;
     try {
-        const catRes = await tiendaApi.get(`/categories/${props.id}`);
-        category.value = catRes.data.data;
-
-        const prodRes = await tiendaApi.get(`/products/categorie/${props.id}`);
-        products.value = prodRes.data.data;
+        category.value = await productService.getCategoryById(props.id);
+        products.value = await productService.getByCategory(props.id);
     } catch (error) {
         console.error("Error fetching category data:", error);
     } finally {

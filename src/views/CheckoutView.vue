@@ -67,7 +67,7 @@
                     <div class="summary-checkout__items">
                         <div v-for="item in cartStore.items" :key="item.id" class="mini-item-checkout">
                             <div class="mini-item-checkout__image-wrapper">
-                                <img :src="`http://localhost:3021/public/${item.image_url}`" :alt="item.name"
+                                <img :src="`http://localhost:3021/public/${item.imageUrl}`" :alt="item.name"
                                     class="mini-item-checkout__img">
                                 <span class="mini-item-checkout__badge">{{ item.quantity }}</span>
                             </div>
@@ -119,7 +119,7 @@ import { useAuthStore } from '../stores/auth';
 import { formatPrice } from '../utils/format';
 import BaseButton from '../components/BaseButton.vue';
 import BaseInput from '../components/BaseInput.vue';
-import tiendaApi from '../api/tiendaApi';
+import orderService from '../services/orderService';
 import { useNotificationStore } from '../stores/notification';
 
 const notificationStore = useNotificationStore();
@@ -129,7 +129,7 @@ const authStore = useAuthStore();
 const isProcessing = ref(false);
 
 const form = reactive({
-    name: authStore.user?.full_name || '',
+    name: authStore.user?.fullName || '',
     address: '',
     city: '',
     region: '',
@@ -165,7 +165,7 @@ const handlePlaceOrder = async () => {
             }))
         };
 
-        await tiendaApi.post('/orders', orderData);
+        await orderService.create(orderData);
 
         alert('¡Pedido realizado con éxito! Gracias por tu compra.');
         cartStore.clearCart();

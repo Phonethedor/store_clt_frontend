@@ -1,12 +1,12 @@
 // src/assets/styles/main.scss
 
 // 1. Base files
-@import './base/variables';
-@import './base/reset';
-@import './base/layout';
+@use './base/variables';
+@use './base/reset';
+@use './base/layout';
 
 // 2. Components Globals
-@import './components/splash';
+@use './components/splash';
 
 // 3. Global Utilities
 .animate-fade-in { animation: fadeIn 1s ease forwards; }

@@ -26,7 +26,7 @@
                                 class="cart-table-full__row item-row-full">
                                 <div class="item-row-full__product">
                                     <div class="item-row-full__image-wrapper">
-                                        <img :src="`http://localhost:3021/public/${item.image_url}`" :alt="item.name"
+                                        <img :src="`http://localhost:3021/public/${item.imageUrl}`" :alt="item.name"
                                             class="item-row-full__img">
                                     </div>
                                     <div class="item-row-full__info">

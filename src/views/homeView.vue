@@ -105,7 +105,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import ProductCard from '../components/ProductCard.vue';
 import BaseButton from '../components/BaseButton.vue';
-import tiendaApi from '../api/tiendaApi';
+import productService from '../services/productService';
 import { useSearchStore } from '../stores/search';
 
 const router = useRouter();
@@ -150,8 +150,7 @@ const sortedProducts = computed(() => {
 
 onMounted(async () => {
     try {
-        const { data } = await tiendaApi.get('/products');
-        products.value = data.data;
+        products.value = await productService.getAll();
     } catch (error) {
         console.error("Error al traer productos:", error);
     } finally {

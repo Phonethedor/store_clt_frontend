@@ -11,7 +11,7 @@
                     <!-- User Avatar Circle -->
                     <div class="avatar-section">
                         <div class="avatar-circle">
-                            {{ authStore.user?.full_name?.charAt(0).toUpperCase() || 'U' }}
+                            {{ authStore.user?.initials || 'U' }}
                         </div>
                     </div>
 
@@ -27,7 +27,7 @@
                         <!-- Full Name -->
                         <div class="form-group">
                             <label>Nombre Completo</label>
-                            <div v-if="!isEditing" class="read-only-box">{{ authStore.user?.full_name }}</div>
+                            <div v-if="!isEditing" class="read-only-box">{{ authStore.user?.fullName }}</div>
                             <input v-else v-model="form.full_name" type="text" required
                                 placeholder="Tu nombre completo">
                         </div>
@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label>Miembro desde</label>
                             <div class="read-only-box date-box">
-                                {{ formatDate(authStore.user?.created_at) }}
+                                {{ formatDate(authStore.user?.createdAt) }}
                             </div>
                         </div>
 
@@ -82,7 +82,7 @@ const form = reactive({
 });
 
 const startEditing = () => {
-    form.full_name = authStore.user.full_name;
+    form.full_name = authStore.user.fullName;
     form.email = authStore.user.email;
     isEditing.value = true;
     successMsg.value = '';

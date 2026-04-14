@@ -26,30 +26,30 @@
                 <div v-for="order in orders" :key="order.id" class="order-card-view">
                     <div class="order-card-view__header">
                         <span class="order-card-view__id">PEDIDO #{{ order.id.slice(0, 8).toUpperCase() }}</span>
-                        <span class="order-card-view__date">{{ formatDate(order.created_at) }}</span>
+                        <span class="order-card-view__date">{{ formatDate(order.createdAt) }}</span>
                     </div>
 
                     <div class="order-card-view__content">
                         <div class="previews-orders">
-                            <div v-for="item in order.order_items.slice(0, 4)" :key="item.id" class="previews-orders__item"
-                                :title="item.product?.name">
-                                <img :src="`http://localhost:3021/public/${item.product?.image_url}`"
-                                    :alt="item.product?.name" class="previews-orders__img">
+                            <div v-for="item in order.items.slice(0, 4)" :key="item.id" class="previews-orders__item"
+                                :title="item.name">
+                                <img :src="`http://localhost:3021/public/${item.imageUrl}`"
+                                    :alt="item.name" class="previews-orders__img">
                                 <span class="previews-orders__qty">x{{ item.quantity }}</span>
                             </div>
-                            <div v-if="order.order_items.length > 4" class="previews-orders__more">
-                                +{{ order.order_items.length - 4 }}
+                            <div v-if="order.items.length > 4" class="previews-orders__more">
+                                +{{ order.items.length - 4 }}
                             </div>
                         </div>
 
                         <div class="financials-orders">
                             <div class="status-orders">
                                 <span :class="['status-orders__dot', `status-orders__dot--${order.status}`]"></span>
-                                <span class="status-orders__text">{{ capitalize(translateStatus(order.status)) }}</span>
+                                <span class="status-orders__text">{{ order.statusLabel }}</span>
                             </div>
                             <div class="financials-orders__total">
                                 <span class="financials-orders__label">Total</span>
-                                <span class="financials-orders__price">${{ formatPrice(order.total_price) }}</span>
+                                <span class="financials-orders__price">${{ formatPrice(order.totalPrice) }}</span>
                             </div>
                         </div>
                     </div>
@@ -93,11 +93,11 @@
                             <section class="section-modal-orders">
                                 <h3 class="section-modal-orders__title">Productos</h3>
                                 <div class="items-list-detail-orders">
-                                    <div v-for="item in selectedOrder.order_items" :key="item.id" class="item-detail-orders">
-                                        <img :src="`http://localhost:3021/public/${item.product?.image_url}`"
+                                    <div v-for="item in selectedOrder.items" :key="item.id" class="item-detail-orders">
+                                        <img :src="`http://localhost:3021/public/${item.imageUrl}`"
                                             class="item-detail-orders__img">
                                         <div class="item-detail-orders__info">
-                                            <span class="item-detail-orders__name">{{ item.product?.name }}</span>
+                                            <span class="item-detail-orders__name">{{ item.name }}</span>
                                             <span class="item-detail-orders__meta">{{ item.quantity }} x ${{ formatPrice(item.price) }}</span>
                                         </div>
                                         <span class="item-detail-orders__subtotal">${{ formatPrice(item.price * item.quantity) }}</span>
@@ -109,7 +109,7 @@
                                 <section class="section-modal-orders">
                                     <h3 class="section-modal-orders__title">Información de Envío</h3>
                                     <div class="section-modal-orders__content">
-                                        <p><strong>Destinatario:</strong> {{ selectedOrder.full_name }}</p>
+                                        <p><strong>Destinatario:</strong> {{ selectedOrder.fullName }}</p>
                                         <p><strong>Dirección:</strong> {{ selectedOrder.address }}</p>
                                         <p><strong>Ciudad:</strong> {{ selectedOrder.city }}, {{ selectedOrder.region }}</p>
                                     </div>
@@ -118,16 +118,16 @@
                                 <section class="section-modal-orders">
                                     <h3 class="section-modal-orders__title">Pago y Estado</h3>
                                     <div class="section-modal-orders__content">
-                                        <p><strong>Método de Pago:</strong> {{ capitalize(selectedOrder.payment_method) }}</p>
-                                        <p><strong>Estado:</strong> {{ capitalize(translateStatus(selectedOrder.status)) }}</p>
-                                        <p><strong>Fecha:</strong> {{ formatDate(selectedOrder.created_at) }}</p>
+                                        <p><strong>Método de Pago:</strong> {{ selectedOrder.paymentMethod }}</p>
+                                        <p><strong>Estado:</strong> {{ selectedOrder.statusLabel }}</p>
+                                        <p><strong>Fecha:</strong> {{ formatDate(selectedOrder.createdAt) }}</p>
                                     </div>
                                 </section>
                             </div>
 
                             <div class="total-display-orders">
                                 <span class="total-display-orders__label">Total Pagado</span>
-                                <span class="total-display-orders__amount">${{ formatPrice(selectedOrder.total_price) }}</span>
+                                <span class="total-display-orders__amount">${{ formatPrice(selectedOrder.totalPrice) }}</span>
                             </div>
                         </div>
                     </div>
@@ -143,7 +143,7 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import { formatPrice } from '../utils/format';
 import BaseButton from '../components/BaseButton.vue';
-import tiendaApi from '../api/tiendaApi';
+import orderService from '../services/orderService';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -161,14 +161,12 @@ const fetchOrders = async (page = 1) => {
 
     loading.value = true;
     try {
-        const response = await tiendaApi.get(`/orders/user/${authStore.user.id}`, {
-            params: { page, limit: 10 }
-        });
+        const data = await orderService.getByUserId(authStore.user.id, page, 10);
         
-        if (response.data && response.data.data) {
-            orders.value = response.data.data.orders || [];
-            totalPages.value = response.data.data.totalPages || 1;
-            currentPage.value = response.data.data.currentPage || 1;
+        if (data) {
+            orders.value = data.orders || [];
+            totalPages.value = data.totalPages || 1;
+            currentPage.value = data.currentPage || 1;
         }
     } catch (error) {
         console.error('Error al obtener pedidos:', error);

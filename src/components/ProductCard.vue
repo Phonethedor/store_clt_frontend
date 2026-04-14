@@ -1,16 +1,16 @@
 <template>
     <div class="product-card staggered-fade"
-        :class="[`product-card--${viewMode}`, { 'product-card--out-of-stock': product.stock === 0 }]"
+        :class="[`product-card--${viewMode}`, { 'product-card--out-of-stock': !product.hasStock }]"
     >
         <div class="product-card__image-container">
-            <div v-if="product.stock === 0" class="product-card__badge product-card__badge--out">Agotado</div>
+            <div v-if="!product.hasStock" class="product-card__badge product-card__badge--out">Agotado</div>
             <div v-else-if="product.stock <= 5" class="product-card__badge product-card__badge--low">¡Últimas unidades!</div>
             
-            <img :src="`http://localhost:3021/public/${product.image_url}`" :alt="product.name" class="product-card__img">
+            <img :src="`http://localhost:3021/public/${product.imageUrl}`" :alt="product.name" class="product-card__img">
             
             <div v-if="viewMode === 'grid'" class="product-card__overlay">
-                <BaseButton @click="handleAddToCart" :disabled="product.stock === 0" size="full">
-                    <span v-if="product.stock > 0">+ Añadir al carrito</span>
+                <BaseButton @click="handleAddToCart" :disabled="!product.hasStock" size="full">
+                    <span v-if="product.hasStock">+ Añadir al carrito</span>
                     <span v-else>Sin stock</span>
                 </BaseButton>
             </div>
@@ -22,12 +22,12 @@
             
             <div class="product-card__meta">
                 <span class="product-card__price">${{ formatPrice(product.price) }}</span>
-                <span v-if="product.stock > 0" class="product-card__stock-count">{{ product.stock }} disponibles</span>
+                <span v-if="product.hasStock" class="product-card__stock-count">{{ product.stock }} disponibles</span>
             </div>
             
             <div v-if="viewMode === 'list'" class="product-card__list-action">
-                <BaseButton @click="handleAddToCart" :disabled="product.stock === 0" variant="primary">
-                    <span v-if="product.stock > 0">+ Añadir al carrito</span>
+                <BaseButton @click="handleAddToCart" :disabled="!product.hasStock" variant="primary">
+                    <span v-if="product.hasStock">+ Añadir al carrito</span>
                     <span v-else>Sin stock</span>
                 </BaseButton>
             </div>

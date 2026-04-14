@@ -36,15 +36,14 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import tiendaApi from '../api/tiendaApi';
+import productService from '../services/productService';
 
 const categories = ref([]);
 const loading = ref(true);
 
 onMounted(async () => {
     try {
-        const { data } = await tiendaApi.get('/categories');
-        categories.value = data.data;
+        categories.value = await productService.getCategories();
     } catch (error) {
         console.error("Error fetching categories:", error);
     } finally {

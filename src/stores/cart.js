@@ -20,12 +20,12 @@ export const useCartStore = defineStore('cart', {
                     existingItem.quantity++;
                 }
             } else {
-                if (product.stock > 0) {
+                if (product.hasStock) {
                     this.items.push({
                         id: product.id,
                         name: product.name,
                         price: product.price,
-                        image_url: product.image_url,
+                        imageUrl: product.imageUrl,
                         quantity: 1,
                         stock: product.stock // Keep track of limit
                     });

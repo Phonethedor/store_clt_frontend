@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia';
-import tiendaApi from '../api/tiendaApi';
+import authService from '../services/authService';
+import userService from '../services/userService';
+import router from '../router';
+import { useCartStore } from './cart';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
@@ -11,7 +14,7 @@ export const useAuthStore = defineStore('auth', {
 
     getters: {
         isAuthenticated: (state) => !!state.token,
-        userName: (state) => state.user?.full_name || 'Usuario'
+        userName: (state) => state.user?.fullName || 'Usuario'
     },
 
     actions: {
@@ -19,8 +22,8 @@ export const useAuthStore = defineStore('auth', {
             this.loading = true;
             this.error = null;
             try {
-                const response = await tiendaApi.post('/auth/login', credentials);
-                const { token, usuario } = response.data;
+                const data = await authService.login(credentials);
+                const { token, usuario } = data;
 
                 this.token = token;
                 this.user = usuario;
@@ -40,7 +43,7 @@ export const useAuthStore = defineStore('auth', {
         async register(userData) {
             this.loading = true;
             try {
-                await tiendaApi.post('/auth/registro', userData);
+                await authService.register(userData);
                 return true;
             } catch (err) {
                 this.error = err.response?.data?.message || 'Error al registrarse';
@@ -55,16 +58,24 @@ export const useAuthStore = defineStore('auth', {
             this.token = null;
             localStorage.removeItem('token');
             localStorage.removeItem('user');
+            
+            // Limpiamos el carrito
+            const cartStore = useCartStore();
+            cartStore.clearCart();
+
             // Informamos al backend para que destruya la sesion
-            tiendaApi.get('/auth/logout').catch(() => { });
+            authService.logout().catch(() => { });
+
+            // Redireccionamos al home
+            router.push('/');
         },
 
         async updateUser(userData) {
             this.loading = true;
             this.error = null;
             try {
-                const response = await tiendaApi.patch(`/users/${this.user.id}`, userData);
-                this.user = response.data.data;
+                const data = await userService.update(this.user.id, userData);
+                this.user = data;
                 localStorage.setItem('user', JSON.stringify(this.user));
                 return true;
             } catch (err) {

@@ -20,7 +20,7 @@
             <div class="content-cart__items items-cart">
                 <div v-for="item in cartStore.items" :key="item.id" class="items-cart__item item-cart">
                     <div class="item-cart__image">
-                        <img :src="`http://localhost:3021/public/${item.image_url}`" :alt="item.name" class="item-cart__img">
+                        <img :src="`http://localhost:3021/public/${item.imageUrl}`" :alt="item.name" class="item-cart__img">
                     </div>
                     <div class="item-cart__details">
                         <h4 class="item-cart__name">{{ item.name }}</h4>
