@@ -1,0 +1,208 @@
+<style scoped>
+.about-page {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.about-hero {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 120px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 600px;
+}
+
+.subtitle {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.8rem;
+    color: var(--taupe);
+    margin-bottom: 20px;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-top: 24px;
+}
+
+.hero-image-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 100%;
+}
+
+.hero-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--sand) 0%, transparent 100%);
+    z-index: 1;
+}
+
+[data-theme='dark'] .hero-overlay {
+    background: linear-gradient(to right, #161210 0%, transparent 100%);
+}
+
+.story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-bottom: 120px;
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.story-text p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+
+.story-image {
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.story-image img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.value-card {
+    padding: 40px;
+    border-top: 1px solid var(--border-color);
+}
+
+.value-num {
+    font-family: var(--font-serif);
+    font-size: 0.9rem;
+    color: var(--taupe);
+    display: block;
+    margin-bottom: 20px;
+}
+
+.value-card h3 {
+    margin-bottom: 15px;
+    font-size: 1.25rem;
+}
+
+.value-card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+@media (max-width: 968px) {
+    .hero-image-container {
+        width: 100%;
+        opacity: 0.3;
+    }
+
+    .hero-content {
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .story-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<template>
+    <div class="about-page animate-fade-in">
+        <!-- Hero Section -->
+        <section class="about-hero">
+            <div class="hero-content container">
+                <span class="subtitle">Nuestra Esencia</span>
+                <h1>En busca de la paz interior</h1>
+                <p class="hero-description">
+                    "My peace" nació no como una tienda, sino como un refugio. Un espacio dedicado a quienes
+                    buscan transformar su entorno en un santuario de calma y bienestar.
+                </p>
+            </div>
+            <div class="hero-image-container">
+                <div class="hero-overlay"></div>
+                <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2070&auto=format&fit=crop"
+                    alt="Ambiente de calma">
+            </div>
+        </section>
+
+        <!-- Historia Section -->
+        <section class="about-story container">
+            <div class="story-grid">
+                <div class="story-text">
+                    <h2 class="section-title">Nuestra Historia</h2>
+                    <p>
+                        Fundada en 2023, nuestra marca surgió de la necesidad de desconectar en un mundo
+                        cada vez más acelerado. Comenzamos con una pequeña selección de velas aromáticas
+                        y hoy nos hemos expandido a todo lo que el alma necesita para sentirse en casa.
+                    </p>
+                    <p>
+                        Creemos que el lujo real no es lo ostentoso, sino la capacidad de disfrutar un
+                        momento de silencio, una fragancia que te transporte y una luz que calme tu espíritu.
+                    </p>
+                </div>
+                <div class="story-image glassmorphism">
+                    <img src="/proceso_artesanal.png" alt="Proceso artesanal">
+                </div>
+            </div>
+        </section>
+
+        <!-- Valores Section -->
+        <section class="about-values">
+            <div class="container">
+                <div class="values-grid">
+                    <div class="value-card">
+                        <span class="value-num">01</span>
+                        <h3>Artesanía</h3>
+                        <p>Cada producto es seleccionado o creado bajo estándares de calidad excepcionales.</p>
+                    </div>
+                    <div class="value-card">
+                        <span class="value-num">02</span>
+                        <h3>Sustentabilidad</h3>
+                        <p>Comprometidos con el medio ambiente, usamos materiales reciclables y procesos éticos.</p>
+                    </div>
+                    <div class="value-card">
+                        <span class="value-num">03</span>
+                        <h3>Bienestar</h3>
+                        <p>Nuestro objetivo final es tu paz mental y el equilibrio de tu hogar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</template>

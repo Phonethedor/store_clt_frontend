@@ -1,69 +1,69 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/homeView.vue';
-import { useAuthStore } from '../stores/auth';
+import HomeView from '../modules/catalog/views/HomeView.vue';
+import { useAuthStore } from '../modules/auth/store/auth.store';
 
 const routes = [
     { path: '/', name: 'home', component: HomeView },
     {
         path: '/login',
         name: 'login',
-        component: () => import('../views/LoginView.vue'),
+        component: () => import('../modules/auth/views/LoginView.vue'),
         meta: { guest: true }
     },
     {
         path: '/registro',
         name: 'register',
-        component: () => import('../views/RegisterView.vue'),
+        component: () => import('../modules/auth/views/RegisterView.vue'),
         meta: { guest: true }
     },
     {
         path: '/categoria/:id',
         name: 'category',
-        component: () => import('../views/CategoryView.vue'),
+        component: () => import('../modules/catalog/views/CategoryView.vue'),
         props: true
     },
     {
         path: '/categorias',
         name: 'categories',
-        component: () => import('../views/CategoriesView.vue')
+        component: () => import('../modules/catalog/views/CategoriesView.vue')
     },
     {
         path: '/cuenta',
         name: 'account',
-        component: () => import('../views/AccountView.vue'),
+        component: () => import('../modules/account/views/AccountView.vue'),
         meta: { requiresAuth: true }
     },
     {
         path: '/carrito',
         name: 'cart',
-        component: () => import('../views/CartView.vue')
+        component: () => import('../modules/cart/views/CartView.vue')
     },
     {
         path: '/checkout',
         name: 'checkout',
-        component: () => import('../views/CheckoutView.vue'),
+        component: () => import('../modules/cart/views/CheckoutView.vue'),
         meta: { requiresAuth: true }
     },
     {
         path: '/mis-pedidos',
         name: 'orders',
-        component: () => import('../views/OrdersView.vue'),
+        component: () => import('../modules/orders/views/OrdersView.vue'),
         meta: { requiresAuth: true }
     },
     {
         path: '/nosotros',
         name: 'about',
-        component: () => import('../views/AboutView.vue')
+        component: () => import('../shared/views/AboutView.vue')
     },
     {
         path: '/contacto',
         name: 'contact',
-        component: () => import('../views/ContactView.vue')
+        component: () => import('../shared/views/ContactView.vue')
     },
     {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
-        component: () => import('../views/NotFoundView.vue')
+        component: () => import('../shared/views/NotFoundView.vue')
     }
 ];
 
