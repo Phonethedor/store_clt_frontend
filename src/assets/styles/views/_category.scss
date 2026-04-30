@@ -134,5 +134,19 @@
 @keyframes spinCategory { to { transform: rotate(360deg); } }
 
 @media (max-width: 768px) {
+  .category-view { padding-top: 90px; }
   .hero-category-view__title { font-size: 2.5rem; }
+  .hero-category-view { padding: 40px 0; }
+}
+
+/* ─── Mobile (≤ 480px) ──────────────────────────────── */
+@media (max-width: 480px) {
+  .category-view { padding-top: 80px; }
+
+  .hero-category-view {
+    padding: 30px 0;
+
+    &__title { font-size: 2rem; }
+    &__description { font-size: 1rem; }
+  }
 }

@@ -160,3 +160,25 @@
   30% { opacity: 0.8; }
   100% { top: -120px; box-shadow: 0 0 30px 25px rgba(200, 200, 200, 0); opacity: 0; transform: translateX(-150%) scale(5); }
 }
+
+/* ─── Mobile (≤ 480px) ──────────────────────────────── */
+@media (max-width: 480px) {
+  .splash-screen {
+    &__text {
+      font-size: 1.8rem;
+      letter-spacing: 4px;
+    }
+  }
+
+  .candle {
+    width: 46px;
+    height: 110px;
+    margin-bottom: 30px;
+
+    &__flame {
+      width: 14px;
+      height: 38px;
+      top: -44px;
+    }
+  }
+}

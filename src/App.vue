@@ -1,4 +1,4 @@
-<script set up>
+<script setup>
 import { ref, onMounted } from 'vue';
 import ToastNotification from './shared/components/ToastNotification.vue';
 import MainLayout from './shared/layouts/MainLayout.vue';
@@ -50,5 +50,3 @@ onMounted(() => {
   <!-- Global Modals/Toasts -->
   <ToastNotification />
 </template>
-
-<style lang="scss"></style>

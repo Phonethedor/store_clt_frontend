@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from 'vue';
+import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue';
+import { useRoute } from 'vue-router';
 import { useCartStore } from '../../modules/cart/store/cart.store';
 import { useSearchStore } from '../stores/search';
 import { useAuthStore } from '../../modules/auth/store/auth.store';
@@ -9,11 +10,26 @@ const cartStore = useCartStore();
 const searchStore = useSearchStore();
 const authStore = useAuthStore();
 
+const route = useRoute();
+
 const isScrolled = ref(false);
 const isDark = ref(false);
 const isSearchActive = ref(false);
+const isMobileMenuOpen = ref(false);
 const searchInput = ref(null);
 const categories = ref([]);
+
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value;
+  document.body.style.overflow = isMobileMenuOpen.value ? 'hidden' : '';
+};
+
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false;
+  document.body.style.overflow = '';
+};
+
+watch(route, closeMobileMenu);
 
 const toggleSearch = async () => {
   isSearchActive.value = !isSearchActive.value;
@@ -55,6 +71,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
+  document.body.style.overflow = '';
 });
 </script>
 
@@ -134,7 +151,68 @@ onUnmounted(() => {
           </svg>
           <span v-if="cartStore.totalItems > 0" class="navbar__cart-count">{{ cartStore.totalItems }}</span>
         </button>
+
+        <!-- Hamburger (mobile only) -->
+        <button
+          class="navbar__hamburger"
+          :class="{ 'navbar__hamburger--open': isMobileMenuOpen }"
+          @click="toggleMobileMenu"
+          aria-label="Menú"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <Transition name="mobile-nav">
+    <div v-if="isMobileMenuOpen" class="mobile-nav" @click="closeMobileMenu">
+      <nav class="mobile-nav__panel" @click.stop>
+        <!-- Brand -->
+        <div class="mobile-nav__brand">
+          <router-link to="/" class="mobile-nav__brand-link" @click="closeMobileMenu">My peace</router-link>
+          <button class="mobile-nav__close" @click="closeMobileMenu" aria-label="Cerrar menú">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Main links -->
+        <div class="mobile-nav__links">
+          <router-link to="/" class="mobile-nav__link" @click="closeMobileMenu">Shop</router-link>
+
+          <div class="mobile-nav__group">
+            <router-link to="/categorias" class="mobile-nav__link" @click="closeMobileMenu">Categorías</router-link>
+            <div v-if="categories.length" class="mobile-nav__subcategories">
+              <router-link
+                v-for="cat in categories"
+                :key="cat.id"
+                :to="`/categoria/${cat.id}`"
+                class="mobile-nav__sublink"
+                @click="closeMobileMenu"
+              >{{ cat.name }}</router-link>
+            </div>
+          </div>
+
+          <router-link to="/nosotros" class="mobile-nav__link" @click="closeMobileMenu">Nosotros</router-link>
+          <router-link to="/contacto" class="mobile-nav__link" @click="closeMobileMenu">Contacto</router-link>
+        </div>
+
+        <!-- Auth section -->
+        <div class="mobile-nav__auth">
+          <template v-if="authStore.isAuthenticated">
+            <span class="mobile-nav__username">{{ authStore.userName }}</span>
+            <router-link to="/cuenta" class="mobile-nav__auth-link" @click="closeMobileMenu">Mi Perfil</router-link>
+            <router-link to="/mis-pedidos" class="mobile-nav__auth-link" @click="closeMobileMenu">Mis Compras</router-link>
+            <button class="mobile-nav__auth-link mobile-nav__auth-link--logout" @click="() => { authStore.logout(); closeMobileMenu(); }">Cerrar Sesión</button>
+          </template>
+          <router-link v-else to="/login" class="mobile-nav__auth-link" @click="closeMobileMenu">Iniciar Sesión</router-link>
+        </div>
+      </nav>
+    </div>
+  </Transition>
 </template>

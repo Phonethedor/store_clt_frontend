@@ -228,10 +228,43 @@
 }
 
 @media (max-width: 768px) {
+  .orders-page {
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
   .order-card-view__content { flex-direction: column; align-items: flex-start; }
   .financials-orders { text-align: left; }
   .status-orders { justify-content: flex-start; }
   .grid-details-orders { grid-template-columns: 1fr; }
+  .header-orders-view__title { font-size: 2rem; }
+}
+
+/* ─── Mobile (≤ 480px) ──────────────────────────────── */
+@media (max-width: 480px) {
+  .orders-page { padding-top: 80px; }
+
+  .order-card-view {
+    padding: 20px 16px;
+    &__header { flex-direction: column; gap: 6px; align-items: flex-start; }
+    &__footer { flex-direction: column; }
+  }
+
+  .modal-orders__content {
+    padding: 24px 16px;
+    border-radius: 12px;
+    max-height: 95vh;
+  }
+
+  .header-modal-orders {
+    &__title { font-size: 1.4rem; }
+  }
+
+  .total-display-orders {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+    &__amount { font-size: 1.6rem; }
+  }
 }
 
 .loading-state__spinner {
